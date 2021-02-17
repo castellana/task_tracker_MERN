@@ -1,5 +1,5 @@
 require('dotenv').config({ path: './config/.env' })  
-
+console.log(process.env.test);
 const express = require('express') 
 const app = express()
 const mongoose = require('mongoose')
@@ -20,3 +20,4 @@ mongoose.connect(process.env.dbUri,{
     })
     .catch(err => console.log(err));
 
+    app.get('/', (req, res) => res.render('index'))

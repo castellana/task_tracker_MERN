@@ -1,23 +1,30 @@
-require('dotenv').config({ path: './config/.env' })  
+require("dotenv").config({ path: "./config/.env" });
 console.log(process.env.test);
-const express = require('express') 
-const app = express()
-const mongoose = require('mongoose')
+const express = require("express");
+const app = express();
+const mongoose = require("mongoose");
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 5000;
 
-app.set('view engine', 'ejs')
-app.use(express.static('public')) 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+const tasksRouter = require("./routes/tasks");
+const usersRouter = require("./routes/users");
 
-mongoose.connect(process.env.dbUri,{
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-    .then(res => {
-        app.listen(PORT, () => console.log(`http://localhost:${PORT}`))
+app.set("view engine", "ejs");
+app.use(express.static("public"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+mongoose
+    .connect(process.env.dbUri, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
     })
-    .catch(err => console.log(err));
+    .then((res) => {
+        app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
+    })
+    .catch((err) => console.log(err));
 
-    app.get('/', (req, res) => res.render('index'))
+app.get("/", (req, res) => res.render("index"));
+
+app.use("/tasks", tasksRouter);
+app.use("/users", usersRouter);

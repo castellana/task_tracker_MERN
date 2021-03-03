@@ -8,17 +8,17 @@ const taskSchema = new Schema(
             type: String,
             required: true,
         },
-        description: {
+        taskName: {
             type: String,
             required: true,
         },
-        duration: {
-            type: Number,
-            required: true,
+        description: {
+            type: String,
+            required: false,
         },
         date: {
             type: Date,
-            required: true,
+            required: false,
         },
     },
     {
